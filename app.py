@@ -2,30 +2,28 @@
 
 """RESTful server for audio normalization implemented using the Pydub library"""
 
-import os
-from flask import Flask, jsonify, abort, send_file, send_from_directory
-from pydub import AudioSegment
+from flask import Flask, jsonify, abort
+from flask_restful import Api, Resource
 
-UPLOAD_DIRECTORY = "/"
+app = Flask(__name__)
+api = Api(app)
 
-if not os.path.exists(UPLOAD_DIRECTORY):
-    os.makedirs(UPLOAD_DIRECTORY)
+class AudioFiles(Resource):
+    def post(self):
+        return jsonify({'files': [file1, file2]})
 
-api = Flask(__name__)
+    #def post(self):
+        # create json request app 
+        # { files: [file1, file2, ...] }
+        # strings
 
-"""Upload File"""
-@api.route("/files/<filename>", methods=["POST"])
-def post_file(filename):
-    if "/" in filename:
-        # Return 400 BAD REQUEST
-        abort(400, "no subdirectories allowed")
+        # print what you receive in body
+        # python script that does a post request
 
-    with open(os.path.join(UPLOAD_DIRECTORY, filename),
-    "wb") as fp:
-        fp.write(request.data)
+        # Return 201 CREATED
+        #return "", 201
 
-    # Return 201 CREATED
-    return "", 201
+api.add_resource(AudioFiles, "/<string:name>")
 
 if __name__ == '__main__':
     api.run(debug=True, port=5000)
