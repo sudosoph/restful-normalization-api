@@ -1,42 +1,31 @@
 #!flask/bin/python
 
-"""RESTful server for audio normalization implemented using the
-Flask-RESTful extension."""
+"""RESTful server for audio normalization implemented using the Pydub library"""
 
-from flask import Flask, jsonify
-from flask_restful import Api, Resource, marshal
+import os
+from flask import Flask, jsonify, abort, send_file, send_from_directory
 from pydub import AudioSegment
 
-app = Flask(__name__)
-api = Api(app)
+UPLOAD_DIRECTORY = "/"
 
-files = [
-    {
-        'id': 1,
-        'path': u'audio1.wav'
-    },
-    {
-        'id': 2,
-        'path': u'audio2.wav'
-    }
-]
+if not os.path.exists(UPLOAD_DIRECTORY):
+    os.makedirs(UPLOAD_DIRECTORY)
 
-file_fields = {
-    'path': fields.String,
-    'uri': fields.Url('file')
-}
+api = Flask(__name__)
 
-class FileListAPI(Resource):
-    def post(self):
-        file = {
-            'id': files[-1]['id'] + 1 if len(files) > 0 else 1,
-            'path': args['path'],
-            'uri': args['uri']
-        }
-        files.append(file)
-        return {'task': marshal(file, file_fields)}, 201
+"""Upload File"""
+@api.route("/files/<filename>", methods=["POST"])
+def post_file(filename):
+    if "/" in filename:
+        # Return 400 BAD REQUEST
+        abort(400, "no subdirectories allowed")
 
-api.add_resource(FileListAPI, '/files', endpoint='files')
+    with open(os.path.join(UPLOAD_DIRECTORY, filename),
+    "wb") as fp:
+        fp.write(request.data)
+
+    # Return 201 CREATED
+    return "", 201
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    api.run(debug=True, port=5000)

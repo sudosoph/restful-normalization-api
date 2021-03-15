@@ -9,4 +9,4 @@ Setup
 - Install Python 3 and git.
 - Run `setup.sh` (Linux, OS X, Cygwin) or `setup.bat` (Windows)
 - Run `./rest-server.py` to start the server (on Windows use `flask\Scripts\python rest-server.py` instead)
-- Open `http://localhost:5000/index.html` on your web browser to run the client
+- Open `http://localhost:5000/` on your web browser to run the client
