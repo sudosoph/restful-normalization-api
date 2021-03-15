@@ -12,7 +12,7 @@ api = Api(app)
 
 @app.route('/', methods=['POST'])
 def post():
-        return request.form['name']
+        return request.form['files']
 
 if __name__ == '__main__':
     api.run(debug=True, port=5000)
