@@ -9,8 +9,8 @@ app = Flask(__name__)
 api = Api(app)
 
 class AudioFiles(Resource):
-    def post(self):
-        return jsonify({'files': [file1, file2]})
+    def post(self, name):
+        return {"data": name}
 
     #def post(self):
         # create json request app 
