@@ -10,9 +10,8 @@ api = Api(app)
 
 @app.route('/', methods=['POST'])
 def post():   
-    if request.method == 'POST':
-        data = request.get_data()
-        files = data.decode().replace('files=','').split('&')
+    data = request.get_data()
+    files = data.decode().replace('files=','').split('&')
         # data = request.form['files']
         # files = data.getlist()
     # check if array is empty or not
@@ -21,10 +20,9 @@ def post():
         # return data
         for file in files:
         #   print every single filename
-            return file
-    else: 
-         # if empty, return {'status': 'ok'}
-        return {'status': 'ok'}
+            return '{}\n'.format(file)
+    # if empty, return {'status': 'ok'}
+    return {'status': 'ok'}
     
 if __name__ == '__main__':
     api.run(debug=True, port=5000)
