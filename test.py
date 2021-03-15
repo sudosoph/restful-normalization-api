@@ -1,6 +1,7 @@
 import requests
 
-BASE = "http://127.0.0.1:5000/"
+URL = "http://127.0.0.1:5000/"
+obj = {'name': 'file'}
 
-response = requests.post(BASE + "file1")
-print(response.json())
+response = requests.post(URL, data = obj)
+print(response.text)
