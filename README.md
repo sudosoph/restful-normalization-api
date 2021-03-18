@@ -7,6 +7,12 @@ Setup
 -----
 
 - Install Python 3 and git.
-- Run `setup.sh` (Linux, OS X, Cygwin) or `setup.bat` (Windows)
-- Run `./rest-server.py` to start the server (on Windows use `flask\Scripts\python rest-server.py` instead)
-- Open `http://localhost:5000/` on your web browser to run the client
+- Clone or download the repository.
+- Run `setup.sh` (Linux, OS X, Cygwin) or `setup.bat` (Windows).
+- Run `FLASK_ENV=development flask run` to start the server (Linux, OS X, Cygwin) or `set FLASK_ENV=development flask run` (Windows).
+- In a separate terminal window, run `python3 test.py` to test the POST request.
+
+![Expected Output](../img/output.png)
+
+
+
