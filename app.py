@@ -10,17 +10,20 @@ api = Api(app)
 
 @app.route('/', methods=['POST'])
 def post():   
-    data = request.get_data()
-    files = data.decode().replace('files=','').split('&')
+    files = request.get_json(force=True)
+    print(files)
+    #files = data.decode().replace('files=','').split('&')
         # data = request.form['files']
         # files = data.getlist()
     # check if array is empty or not
     if files:    
         # iterate a received array
         # return data
-        for file in files:
+        for files, file in files.items():
         #   print every single filename
-            return '{}\n'.format(file)
+            #return '{}\n'.format()
+            #result = [i for i in file]
+            return '\n'.join('{}'.format(i) for i in file)
     # if empty, return {'status': 'ok'}
     return {'status': 'ok'}
     
