@@ -4,6 +4,7 @@
 
 from flask import Flask, request
 from flask_restful import Api, Resource
+from pydub import AudioSegment, effects
 
 app = Flask(__name__)
 api = Api(app)
@@ -12,6 +13,7 @@ api = Api(app)
 def post():   
     files = request.get_json(force=True)
     print(files)
+    result=[]
     #files = data.decode().replace('files=','').split('&')
         # data = request.form['files']
         # files = data.getlist()
@@ -23,7 +25,15 @@ def post():
         #   print every single filename
             #return '{}\n'.format()
             #result = [i for i in file]
-            return '\n'.join('{}'.format(i) for i in file)
+            for i, file in enumerate(file):
+                result.append(file)
+            #print(result)
+            for x in result:
+                print(x)
+                rawsound = AudioSegment.from_file('{}'.format(x))
+                normalizedsound = effects.normalize(rawsound)
+                normalizedsound.export('output'+'{}'.format(x))
+            return 'Normalized Files: ' + ' '.join(result)
     # if empty, return {'status': 'ok'}
     return {'status': 'ok'}
     
