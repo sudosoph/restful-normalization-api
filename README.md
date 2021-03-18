@@ -12,7 +12,7 @@ Setup
 - Run `FLASK_ENV=development flask run` to start the server (Linux, OS X, Cygwin) or `set FLASK_ENV=development flask run` (Windows).
 - In a separate terminal window, run `python3 test.py` to test the POST request.
 
-![Expected Output](../img/output.png)
+<img src="https://github.com/sudosoph/simple-normalization-api/blob/main/img/output.png" width="600">
 
 
 
