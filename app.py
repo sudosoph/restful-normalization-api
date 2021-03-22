@@ -5,8 +5,9 @@
 from flask import Flask, request
 from flask_restful import Api, Resource
 from pydub import AudioSegment, effects
+import os
 
-UPLOAD_DIRECTORY = "/test-audios"
+UPLOAD_DIRECTORY = "/test-audios/output"
 
 if not os.path.exists(UPLOAD_DIRECTORY):
     os.makedirs(UPLOAD_DIRECTORY)
@@ -18,7 +19,7 @@ api = Api(app)
 @app.route("/", methods=["POST"])
 def post():
     files = request.get_json(force=True)
-    print(files)
+    #print(files)
     result = []
     # check if array is empty or not
     if files:
@@ -26,11 +27,11 @@ def post():
         for files, file in files.items():
             # print every single filename
             for i, file in enumerate(file):
-                result.append(file)
-            for x in result:
-                print(x)
-                with open(os.path.join(UPLOAD_DIRECTORY, x), "wb") as fp:
-                fp.write(request.data)
+                with open(os.path.join(UPLOAD_DIRECTORY, file), "wb") as fp:
+                    fp.write(file)
+                #result.append(file)
+            #for x in result:
+                #print(x)
                 # rawsound = AudioSegment.from_file("{}".format(x))
                 # normalizedsound = effects.normalize(rawsound)
                 # normalizedsound.export("output" + "{}".format(x))
