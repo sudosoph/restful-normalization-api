@@ -6,6 +6,11 @@ from flask import Flask, request
 from flask_restful import Api, Resource
 from pydub import AudioSegment, effects
 
+UPLOAD_DIRECTORY = "/test-audios"
+
+if not os.path.exists(UPLOAD_DIRECTORY):
+    os.makedirs(UPLOAD_DIRECTORY)
+
 app = Flask(__name__)
 api = Api(app)
 
@@ -24,9 +29,11 @@ def post():
                 result.append(file)
             for x in result:
                 print(x)
-                rawsound = AudioSegment.from_file("{}".format(x))
-                normalizedsound = effects.normalize(rawsound)
-                normalizedsound.export("output" + "{}".format(x))
+                with open(os.path.join(UPLOAD_DIRECTORY, x), "wb") as fp:
+                fp.write(request.data)
+                # rawsound = AudioSegment.from_file("{}".format(x))
+                # normalizedsound = effects.normalize(rawsound)
+                # normalizedsound.export("output" + "{}".format(x))
             return "Normalized Files: " + " ".join(result)
     # if empty
     return {"status": "ok"}
