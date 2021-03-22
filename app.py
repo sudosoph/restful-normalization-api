@@ -35,7 +35,7 @@ def post():
                 # rawsound = AudioSegment.from_file("{}".format(x))
                 # normalizedsound = effects.normalize(rawsound)
                 # normalizedsound.export("output" + "{}".format(x))
-            return "Normalized Files: " + " ".join(result)
+            #return "Normalized Files: " + " ".join(result)
     # if empty
     return {"status": "ok"}
 
