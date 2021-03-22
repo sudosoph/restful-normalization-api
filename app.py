@@ -9,33 +9,28 @@ from pydub import AudioSegment, effects
 app = Flask(__name__)
 api = Api(app)
 
-@app.route('/', methods=['POST'])
-def post():   
+
+@app.route("/", methods=["POST"])
+def post():
     files = request.get_json(force=True)
     print(files)
-    result=[]
-    #files = data.decode().replace('files=','').split('&')
-        # data = request.form['files']
-        # files = data.getlist()
+    result = []
     # check if array is empty or not
-    if files:    
+    if files:
         # iterate a received array
-        # return data
         for files, file in files.items():
-        #   print every single filename
-            #return '{}\n'.format()
-            #result = [i for i in file]
+            # print every single filename
             for i, file in enumerate(file):
                 result.append(file)
-            #print(result)
             for x in result:
                 print(x)
-                rawsound = AudioSegment.from_file('{}'.format(x))
+                rawsound = AudioSegment.from_file("{}".format(x))
                 normalizedsound = effects.normalize(rawsound)
-                normalizedsound.export('output'+'{}'.format(x))
-            return 'Normalized Files: ' + ' '.join(result)
-    # if empty, return {'status': 'ok'}
-    return {'status': 'ok'}
-    
-if __name__ == '__main__':
+                normalizedsound.export("output" + "{}".format(x))
+            return "Normalized Files: " + " ".join(result)
+    # if empty
+    return {"status": "ok"}
+
+
+if __name__ == "__main__":
     api.run(debug=True, port=5000)
