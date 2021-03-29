@@ -7,10 +7,10 @@ from flask_restful import Api, Resource
 from pydub import AudioSegment, effects
 import os
 
-UPLOAD_DIRECTORY = "/test-audios/output"
+FILES_DIRECTORY = os.getcwd() + "/test-audios"
 
-if not os.path.exists(UPLOAD_DIRECTORY):
-    os.makedirs(UPLOAD_DIRECTORY)
+if not os.path.exists(FILES_DIRECTORY):
+    os.makedirs(FILES_DIRECTORY)
 
 app = Flask(__name__)
 api = Api(app)
@@ -19,24 +19,13 @@ api = Api(app)
 @app.route("/", methods=["POST"])
 def post():
     files = request.get_json(force=True)
-    #print(files)
-    result = []
-    # check if array is empty or not
-    if files:
-        # iterate a received array
-        for files, file in files.items():
-            # print every single filename
-            for i, file in enumerate(file):
-                with open(os.path.join(UPLOAD_DIRECTORY, file), "wb") as fp:
-                    fp.write(file)
-                #result.append(file)
-            #for x in result:
-                #print(x)
-                # rawsound = AudioSegment.from_file("{}".format(x))
-                # normalizedsound = effects.normalize(rawsound)
-                # normalizedsound.export("output" + "{}".format(x))
-            #return "Normalized Files: " + " ".join(result)
-    # if empty
+    for key, val in files.items():
+        for i in val:
+            with open(os.path.join(FILES_DIRECTORY, i), "rb") as fp:
+                rawsound = AudioSegment.from_file(fp)
+                normalizedsound = effects.normalize(rawsound)
+                normalizedsound.export("output" + i)
+                fp.close()
     return {"status": "ok"}
 
 
