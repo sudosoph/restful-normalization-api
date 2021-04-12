@@ -17,7 +17,7 @@ def post():
     for i in files["files"]:
         rawsound = AudioSegment.from_wav("test-audios/" + i)
         normalizedsound = effects.normalize(rawsound)
-        normalizedsound.export("test-audios/output/" + i + "-output")
+        normalizedsound.export("test-audios/output/" + i)
     return {"status": "ok"}
 
 

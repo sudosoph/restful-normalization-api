@@ -9,6 +9,7 @@ obj = {
         "M5_b50_w2_orig.wav",
         "M5_b50_w3_orig.wav",
         "M5_b50_w4_orig.wav",
+        "impaired_test_file.wav"
     ]
 }
 
